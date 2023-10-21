@@ -1,6 +1,5 @@
-#include <string>
 #include "JSimple.hpp"
-#include <functional> 
+#include <functional>
 
 struct Command {
     string Name;        // Name of the command
@@ -13,8 +12,7 @@ struct Command {
     Command(const std::string& _name, const std::string& _description, const std::string& _usage, int _parametercount, std::function<void(string Input)> _parameters)
         : Name(_name), Description(_description), Usage(_usage), ParameterCount(_parametercount), Function(_parameters) {}
 
-    void Execute(string Parameters) 
-    {
+    void Execute(string Parameters) {
         Function(Parameters);
     }
 

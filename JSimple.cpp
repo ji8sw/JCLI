@@ -185,12 +185,34 @@ float CompareStringByWord(const string& string1, const string& string2) { // Bro
     return similarityPercent;
 }
 
-string ReverseString(string string) {
-    std::string Reversed;
+string ReverseString(string Input) {
+    string Reversed;
 
-    for (int i = string.length() - 1; i >= 0; i--) {
-        Reversed += string[i];
+    for (int i = Input.length() - 1; i >= 0; i--) {
+        Reversed += Input[i];
     }
 
     return Reversed;
+}
+
+wstring ToWideString(string Input) { // https://gist.github.com/danzek/d6a0e4a48a5439e7f808ed1497f6268e
+    vector<wchar_t> buf(Input.size());
+    use_facet<ctype<wchar_t>>(locale()).widen(Input.data(),
+        Input.data() + Input.size(),
+        buf.data());
+    return wstring(buf.data(), buf.size());
+}
+
+bool IsPrime(int Number) {
+    if (Number <= 1) {
+        return false;
+    }
+
+    for (int i = 2; i * i <= Number; i++) {
+        if (Number % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
 }

@@ -3,11 +3,6 @@
 #include "Command.hpp"
 #include "CommandList.hpp"
 
-void func(string Input)
-{
-
-}
-
 int main(int argc, char* argv[])
 {
     CommandsList CommandManager;
@@ -59,8 +54,24 @@ int main(int argc, char* argv[])
             Command = CommandInput;
         }
 
-        if (CommandManager.GetCommandByName(Command)) 
-        {
+        if (isdigit(Command[0])) {
+            int commandNumber = stoi(Command);
+            if (commandNumber >= 0 && commandNumber < CommandManager.GetCommandCount()) {
+                Command = CommandManager.GetCommandByNumber(commandNumber)->Name;
+
+                if (CommandManager.GetCommandByName(Command)->ParameterCount > 0 && Parameters == "")
+                {
+                    Print("Error: This command requires " + std::to_string(CommandManager.GetCommandByName(Command)->ParameterCount) + " Parameters\n");
+                    goto TopOfLoop;
+                }
+                CommandManager.GetCommandByName(Command)->Execute(Parameters);
+            }
+            else {
+                Print("Error: Invalid command number\n");
+                continue;
+            }
+        }
+        else if (CommandManager.GetCommandByName(Command) != nullptr) {
             if (CommandManager.GetCommandByName(Command)->ParameterCount > 0 && Parameters == "")
             {
                 Print("Error: This command requires " + std::to_string(CommandManager.GetCommandByName(Command)->ParameterCount) + " Parameters\n");
@@ -69,21 +80,9 @@ int main(int argc, char* argv[])
             CommandManager.GetCommandByName(Command)->Execute(Parameters);
             Print("\n");
         }
-        else if (stoi(Command) >~ CommandManager.GetCommandCount() && CommandManager.GetCommandByNumber(stoi(Command)))
-        {
-            Command = CommandManager.GetCommandByNumber(stoi(Command))->Name;
-            
-            if (CommandManager.GetCommandByName(Command)->ParameterCount > 0 && Parameters == "")
-            {
-                Print("Error: This command requires " + std::to_string(CommandManager.GetCommandByName(Command)->ParameterCount) + " Parameters\n");
-                goto TopOfLoop;
-            }
-            CommandManager.GetCommandByName(Command)->Execute(Parameters);
-            Print("\n");
-        }
-        else 
-        {
+        else {
             Print("Error: This command does not exist\n");
+            goto TopOfLoop;
         }
     }
 }

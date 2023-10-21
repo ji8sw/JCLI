@@ -41,4 +41,10 @@ float CompareStringByChar(const string& string1, const string& string2); // Brok
 
 float CompareStringByWord(const string& string1, const string& string2); // Broken: Always returns 100.0
 
+string ReverseString(string Input);
+
+wstring ToWideString(string Input);
+
+bool IsPrime(int Number);
+
 #endif

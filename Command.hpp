@@ -2,7 +2,6 @@
 #define COMMAND_HPP
 #pragma once
 
-#include <string>
 #include "JSimple.hpp"
 #include <functional> 
 
@@ -22,5 +21,6 @@ struct Command {
     }
 
 };
+
 
 #endif // COMMAND_HPP

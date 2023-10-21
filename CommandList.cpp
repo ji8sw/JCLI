@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <chrono>
 #include <ctime>
+#pragma comment(lib, "user32.lib")
+#include <Windows.h>
 #pragma warning(disable : 4996)
 
 CommandsList::CommandsList() {
@@ -54,15 +56,15 @@ CommandsList::CommandsList() {
             return;
         }
 
-        if (Parameters[1] == "x" || Parameters[1] == "X" || Parameters[1] == "*") {
+        if (Parameters[1] == "x" || Parameters[1] == "X" || Parameters[1] == "*" || ToLowerCase(Parameters[1]) == "times") {
             int result = Num1 * Num2;
             Print(to_string(result));
         }
-        else if (Parameters[1] == "+") {
+        else if (Parameters[1] == "+" || ToLowerCase(Parameters[1]) == "plus") {
             int result = Num1 + Num2;
             Print(to_string(result));
         }
-        else if (Parameters[1] == "-") {
+        else if (Parameters[1] == "-" || ToLowerCase(Parameters[1]) == "minus") {
             int result = Num1 - Num2;
             Print(to_string(result));
         }
@@ -89,6 +91,52 @@ CommandsList::CommandsList() {
             Print("Current time: " + TimeString);
         });
     AddCommand(TimeCommand);
+
+    Command MessageBoxCommand("MessageBox", "Shows a message box with your title and text", "MessageBox MyTitle MyDescription", 2, [this](string Input)
+        {
+            vector<string> Parameters = StringToListWords(Input);
+
+            std::wstring Title = std::wstring(Parameters[0].begin(), Parameters[0].end());
+            LPCWSTR WideTitle = Title.c_str();
+
+            std::wstring Description = std::wstring(Parameters[1].begin(), Parameters[1].end());
+            LPCWSTR WideDescription = Description.c_str();
+
+            MessageBox(NULL, WideDescription, WideTitle, MB_OK | MB_ICONINFORMATION);
+        });
+    AddCommand(MessageBoxCommand);
+
+    Command CheckPrimeCommand("CheckPrime", "Tells you if a number is a prime number", "CheckPrime 2", 1, [this](string Input)
+        {
+            vector<string> Parameters = StringToListWords(Input);
+
+            try {
+                if (!Parameters.empty()) {
+                    int number = std::stoi(Parameters[0]);
+                    // The conversion was successful; you can use 'number' here.
+                }
+                else {
+                    Print("Error: Missing parameter");
+                    return;
+                }
+            }
+            catch (const std::invalid_argument& e) {
+                Print("Error: Invalid number");
+                return;
+            }
+
+            
+            if (IsPrime(stoi(Parameters[0])))
+            {
+                Print("Number is a prime number");
+            }
+            else 
+            {
+                Print("Number is not a prime number");
+            }
+        });
+    AddCommand(CheckPrimeCommand);
+
 }
 
 void CommandsList::AddCommand(const Command& command) {
@@ -113,19 +161,23 @@ bool CommandsList::RemoveCommandByNumber(const int& Value) {
 }
 
 void CommandsList::DisplayCommands() const {
+    int position = 0; // Initialize the position counter
+
     for (const Command& cmd : CommandList) {
-        Print("Command Name: "+ cmd.Name + "\n");
-        if (cmd.Description != "")
-        {
+        Print("Command Name: " + cmd.Name + " (" + to_string(position) + ")\n");
+
+        if (cmd.Description != "") {
             Print("Description: " + cmd.Description + "\n");
         }
-        if (cmd.Usage != "")
-        {
+        if (cmd.Usage != "") {
             Print("Usage: " + cmd.Usage + "\n");
         }
         Print("\n");
+
+        position++; // Increment the position counter
     }
 }
+
 
 Command* CommandsList::GetCommandByName(const string& Name) {
     for (Command& cmd : CommandList) {

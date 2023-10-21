@@ -1,0 +1,35 @@
+    Command AddCCommand("AddCommand", "Add a custom command", "AddCommand MyCommandName Time Clear Help", 2, [this](string Input)
+        {
+            vector<string> Parameters = StringToListWords(Input);
+
+            string CommandName = Parameters[0];
+
+            Parameters.erase(Parameters.begin());
+
+            // Combine the remaining parameters into a single string, which represents the custom command
+            string CustomCommand = ListToString(Parameters);
+
+            // Create and add the custom command
+            Command CustomCmd(CommandName, "User Defined Command", CustomCommand, 0, [this](string Input)
+                {
+                    // Split the input into words and execute each word as a command
+                    vector<string> CommandWords = StringToListWords(Input);
+                    for (const string& CommandWord : CommandWords) {
+                        if (GetCommandByName(CommandWord)) {
+                            GetCommandByName(CommandWord)->Execute("");
+                        }
+                        else if (GetCommandByNumber(stoi(CommandWord)))
+                        {
+                            GetCommandByNumber(stoi(CommandWord))->Execute("");
+                        }
+                        else {
+                            Print("Error: Command not found - " + CommandWord);
+                        }
+                    }
+                });
+
+            AddCommand(CustomCmd);
+        });
+    AddCommand(AddCCommand);
+
+This isn't featured in the release or source because its over complicated and I'm not sure I'll add it ever
