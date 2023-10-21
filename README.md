@@ -5,10 +5,16 @@
 
 ### List of Commands
 
--   **Help**: Returns a string that contains available commands and their information.
--   **Say**: Repeats all the parameters except for the command itself to the console.
+-   **Help**: Sends a list of commands and their info.
+-   **Stop**: Stops the console.
+-   **Say**: Repeats your message to the console.
 -   **Clear**: Clears the console.
--   **Execute**: Executes a command, similar to using the command prompt. 
+-   **Execute**: Executes a command just like in command prompt. 
+-   **CommandCount**: Says how many commands are present. 
+-   **Calculate**: Add, Multiply, Subtract, and Divide. 
+-   **Time**: Says the current system date and time. 
+-   **MessageBox**: Shows a message box with your title and text. ***New!***
+-   **CheckPrime**: Tells you if a number is a prime number. ***New!***
 
 ### Command Type Documentation
 
@@ -47,3 +53,6 @@ In this example, `CommandManager` is used to manage and execute a set of predefi
 
 ## Open Source
 Please note that this is all opensource, so if you understand C++ or are learning, you can modify anything in this project using Visual Studio, such as adding your own commands.
+
+## JSimple
+This project was made with [JSimple](https://github.com/ji8sw/JSimple)
