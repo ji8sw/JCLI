@@ -1,11 +1,13 @@
+#ifndef JSimple
+#define JSimple
+#pragma once
+
 #include <fstream>
 #include <vector>
 #include <string>
 #include <iostream>
 #include <random>
 #include <sstream>
-#ifndef JSimple
-#define JSimple
 using namespace std;
 
 void Print(string String);

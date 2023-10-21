@@ -3,6 +3,11 @@
 #include "Command.hpp"
 #include "CommandList.hpp"
 
+void func(string Input)
+{
+
+}
+
 int main(int argc, char* argv[])
 {
     CommandsList CommandManager;
@@ -64,7 +69,20 @@ int main(int argc, char* argv[])
             CommandManager.GetCommandByName(Command)->Execute(Parameters);
             Print("\n");
         }
-        else {
+        else if (stoi(Command) >~ CommandManager.GetCommandCount() && CommandManager.GetCommandByNumber(stoi(Command)))
+        {
+            Command = CommandManager.GetCommandByNumber(stoi(Command))->Name;
+            
+            if (CommandManager.GetCommandByName(Command)->ParameterCount > 0 && Parameters == "")
+            {
+                Print("Error: This command requires " + std::to_string(CommandManager.GetCommandByName(Command)->ParameterCount) + " Parameters\n");
+                goto TopOfLoop;
+            }
+            CommandManager.GetCommandByName(Command)->Execute(Parameters);
+            Print("\n");
+        }
+        else 
+        {
             Print("Error: This command does not exist\n");
         }
     }
