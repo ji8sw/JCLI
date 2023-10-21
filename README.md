@@ -5,10 +5,10 @@
 
 ### List of Commands
 
--   **DisplayCommandsCommand**: Returns a string that contains available commands and their information.
--   **SayCommand**: Repeats all the parameters except for the command itself to the console.
--   **ClearCommand**: Clears the console.
--   **ExecuteCommand**: Executes a command, similar to using the command prompt.
+-   **Help**: Returns a string that contains available commands and their information.
+-   **Say**: Repeats all the parameters except for the command itself to the console.
+-   **Clear**: Clears the console.
+-   **Execute**: Executes a command, similar to using the command prompt. 
 
 ### Command Type Documentation
 
