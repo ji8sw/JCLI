@@ -38,8 +38,5 @@
     <ClInclude Include="CommandList.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="curl\curl\curl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
