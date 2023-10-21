@@ -1,2 +1,2 @@
 # JCLI
-A command line interface in C++
+This tool is a small command line interface made in C++
